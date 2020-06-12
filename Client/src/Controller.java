@@ -27,16 +27,6 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         im.setImage(new Image("image.png"));
         getIP();
-       // try (ClServ module = new ClServ(getIP(),2654)) {
-       //     System.out.println("Connected to server");
-       //     request = module.readerLine();
-       //     response = module.readerLine();
-       //     System.out.println("" + response);
-//
-       // } catch (IOException e) {
-       //     e.printStackTrace();
-       // }
-//
         name.setText(request);
         temp.setText(response);
     }
@@ -71,7 +61,6 @@ public class Controller implements Initializable {
             System.out.println(" ошибка доступа ->" + e);
         }
         IP =  myIP.getHostAddress();
-        System.out.println(" Мой IP: " + IP);
         return IP;
     }
 }
