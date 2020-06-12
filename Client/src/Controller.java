@@ -7,7 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -18,11 +20,23 @@ public class Controller implements Initializable {
     public String sity;
     public String response;
     public String request;
+    public String IP;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         im.setImage(new Image("image.png"));
+        getIP();
+       // try (ClServ module = new ClServ(getIP(),2654)) {
+       //     System.out.println("Connected to server");
+       //     request = module.readerLine();
+       //     response = module.readerLine();
+       //     System.out.println("" + response);
+//
+       // } catch (IOException e) {
+       //     e.printStackTrace();
+       // }
+//
         name.setText(request);
         temp.setText(response);
     }
@@ -36,7 +50,7 @@ public class Controller implements Initializable {
 
     public void init() {
 
-        try (ClServ module = new ClServ("127.0.0.1", 2654)) {
+        try (ClServ module = new ClServ(IP, 2654)) {
             System.out.println("Connected to server");
             request = sity;
             module.writeLine(request);
@@ -47,5 +61,17 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getIP() {
+        InetAddress myIP = null;
+        try {
+            myIP = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            System.out.println(" ошибка доступа ->" + e);
+        }
+        IP =  myIP.getHostAddress();
+        System.out.println(" Мой IP: " + IP);
+        return IP;
     }
 }
