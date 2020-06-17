@@ -29,7 +29,7 @@ public class SController implements Initializable {
                         if (request.equals("1")) {
                             module.writeLine(res);
                         } else {
-                            respons = module.readerLine();
+
                                 if (map != null && map.equals(request) ) {
                                     respons = map.get(request).toString();
                                     module.writeLine(request);
@@ -39,12 +39,14 @@ public class SController implements Initializable {
                                     res = new String(request + respons);
                                     System.out.println(res);
                                 } else {
-                                    map.put(request, Integer.valueOf(respons));
 
+                                    respons = module.readerLine();
+                                    map.put(request, Integer.valueOf(respons));
                                     module.writeLine(request);
                                     module.writeLine(respons);
-                                    System.out.println("" + request);
-                                    System.out.println("" + respons);
+                                    System.out.println(map);
+                                    //System.out.println("" + request);
+                                    //System.out.println("" + respons);
                                     res = new String(request + respons);
                                     System.out.println(res);
                                 }
