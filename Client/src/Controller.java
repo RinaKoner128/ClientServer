@@ -1,15 +1,11 @@
 import ClientServers.ClServ;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -49,9 +45,9 @@ public class Controller implements Initializable {
 
         try (ClServ module = new ClServ(IP, 2654)) {
             System.out.println("Connected to server");
+            module.setTf(false);
             request = sity;
             response = temperature;
-
             module.writeLine(request);
             module.writeLine(response);
             request = module.readerLine();
@@ -62,12 +58,13 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
     public void inits() {
 
         try (ClServ module = new ClServ(IP, 2654)) {
             System.out.println("Connected to server");
+            module.setTf(true);
             request = sity;
-
             module.writeLine(request);
             request = module.readerLine();
             response = module.readerLine();
@@ -85,17 +82,17 @@ public class Controller implements Initializable {
         } catch (UnknownHostException e) {
             System.out.println(" ошибка доступа ->" + e);
         }
-        IP =  myIP.getHostAddress();
+        IP = myIP.getHostAddress();
         return IP;
     }
 
     public void clNow(ActionEvent actionEvent) {
-       ind.setVisible(true);
+        ind.setVisible(true);
     }
 
     public void newOk(ActionEvent actionEvent) {
-        sity=insity.getText();
-        temperature=intemp.getText();
+        sity = insity.getText();
+        temperature = intemp.getText();
         init();
         name.setText(request);
         temp.setText(response);
