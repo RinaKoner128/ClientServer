@@ -8,14 +8,12 @@ public class ClServ implements Closeable {
     private final Socket socket;
     private final BufferedReader reader;
     private final BufferedWriter writer;
-    private boolean tf;
 
     public ClServ(String ip, int port) {
         try {
             this.socket = new Socket(ip, port);
             this.reader = createReader();
             this.writer = createWriter();
-            this.tf=isTf();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -26,7 +24,6 @@ public class ClServ implements Closeable {
             this.socket = server.accept();
             this.reader = createReader();
             this.writer = createWriter();
-            this.tf=isTf();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -58,14 +55,6 @@ public class ClServ implements Closeable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public boolean isTf() {
-        return tf;
-    }
-
-    public void setTf(boolean tf) {
-        this.tf = tf;
     }
 
     @Override

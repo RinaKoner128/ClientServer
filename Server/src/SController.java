@@ -14,7 +14,7 @@ public class SController implements Initializable {
     public String respons;
     public Map<String, Integer> map = new HashMap();
     private String res;
-    public boolean inc;
+    public String mark;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -24,29 +24,37 @@ public class SController implements Initializable {
 
             while (true)
                 try (ClServ module = new ClServ(server)) {
-                    request = module.readerLine();
+                    mark = module.readerLine();
 
                     synchronized (this) {
-                        if (request.equals("1")) {
+                        if (mark.equals("1")) {
                             module.writeLine(res);
                         } else {
-
-                            if (map != null && map.containsKey(request) && module.isTf()) {
-                                respons = map.get(request).toString();
-                                module.writeLine(request);
-                                module.writeLine(respons);
-                                System.out.println("" + request);
-                                System.out.println("" + respons);
-                                res = new String(request + respons);
-                                System.out.println(res);
+                            if (mark.equals("#")) {
+                                request = module.readerLine();
+                                if (map.containsKey(request)) {
+                                    respons = map.get(request).toString();
+                                    module.writeLine(request);
+                                    module.writeLine(respons+"°");
+                                    System.out.println("" + request);
+                                    System.out.println("" + respons);
+                                    res = new String(request + respons);
+                                    System.out.println(res);
+                                } else {
+                                    module.writeLine(request);
+                                    module.writeLine("Нет данных");
+                                }
                             } else {
-                                respons = module.readerLine();
-                                map.put(request, Integer.valueOf(respons));
-                                module.writeLine(request);
-                                module.writeLine(respons);
-                                System.out.println(map);
-                                res = new String(request + respons);
-                                System.out.println(res);
+                                if (mark.equals("?")) {
+                                    request = module.readerLine();
+                                    respons = module.readerLine();
+                                    map.put(request, Integer.valueOf(respons));
+                                    module.writeLine(request);
+                                    module.writeLine(respons+"°");
+                                    System.out.println(map);
+                                    res = new String(request + respons);
+                                    System.out.println(res);
+                                }
                             }
                         }
                     }

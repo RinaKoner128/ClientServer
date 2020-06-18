@@ -45,7 +45,7 @@ public class Controller implements Initializable {
 
         try (ClServ module = new ClServ(IP, 2654)) {
             System.out.println("Connected to server");
-            module.setTf(false);
+            module.writeLine("?");
             request = sity;
             response = temperature;
             module.writeLine(request);
@@ -63,7 +63,7 @@ public class Controller implements Initializable {
 
         try (ClServ module = new ClServ(IP, 2654)) {
             System.out.println("Connected to server");
-            module.setTf(true);
+            module.writeLine("#");
             request = sity;
             module.writeLine(request);
             request = module.readerLine();
